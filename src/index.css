@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+/* Sous-ensemble latin uniquement : évite de charger les Devanagari dans le bundle. */
+@import '@fontsource/poppins/latin-300.css';
+@import '@fontsource/poppins/latin-400.css';
+@import '@fontsource/poppins/latin-500.css';
+@import '@fontsource/poppins/latin-600.css';
+@import '@fontsource/poppins/latin-700.css';
+@import '@fontsource/playfair-display/latin-500.css';
+@import '@fontsource/playfair-display/latin-600.css';
+@import '@fontsource/playfair-display/latin-700.css';
+
+@theme {
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Playfair Display', ui-serif, Georgia, serif;
+
+  /*
+   * Teintes claires (50-300) : gris proche du blanc, pour les fonds, bordures et
+   * textes sur fond bleu nuit. L'identité visuelle bleue est portée par les
+   * teintes foncées (500-950) — logo et blocs de couleur de l'église.
+   */
+  --color-brand-50: #f8fafc;
+  --color-brand-100: #f1f5f9;
+  --color-brand-200: #e2e8f0;
+  --color-brand-300: #cbd5e1;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+  --color-brand-950: #172554;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-white font-sans text-slate-700 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-slate-900;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-600;
+  }
+}
+
+/*
+ * Les boutons sont déclarés via `@utility` (et non `@layer components`) afin que
+ * Tailwind v4 les considère comme de véritables utilitaires : ils peuvent ainsi
+ * être utilisés dans le markup ET compositionalisés via `@apply` entre eux.
+ */
+@utility btn {
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+@utility btn-primary {
+  @apply btn bg-brand-700 text-white shadow-lg shadow-brand-700/20 hover:bg-brand-800 hover:shadow-brand-800/30;
+}
+
+@utility btn-secondary {
+  @apply btn border border-brand-700 text-brand-800 hover:bg-brand-50;
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    @apply rounded-xl border border-slate-200 bg-white shadow-sm;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-slate-800;
+  }
+
+  .field-input {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 transition placeholder:text-slate-400 focus:border-brand-600 focus:ring-2 focus:ring-brand-600/30 focus:outline-none;
+  }
+
+  .field-input-error {
+    @apply border-red-500 focus:border-red-600 focus:ring-red-600/30;
+  }
+
+  .field-error {
+    @apply mt-1.5 flex items-start gap-1 text-sm text-red-600;
+  }
+}
